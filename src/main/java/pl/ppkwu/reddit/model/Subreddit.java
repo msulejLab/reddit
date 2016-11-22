@@ -14,12 +14,12 @@ public class Subreddit implements pl.ppkwu.reddit.api.Subreddit{
 
     @Override
     public String title() {
-        return null;
+        return title;
     }
 
     @Override
     public String description() {
-        return null;
+        return description;
     }
 
     @Override
