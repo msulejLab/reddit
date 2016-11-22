@@ -1,15 +1,13 @@
 package pl.ppkwu.reddit.model;
 
 
-import pl.ppkwu.reddit.api.User;
-
 import java.util.Objects;
 
-public class RedditUser implements User {
+public class User implements pl.ppkwu.reddit.api.User {
 
     private String login;
 
-    public RedditUser(String login) {
+    public User(String login) {
         this.login = login;
     }
 
@@ -21,8 +19,8 @@ public class RedditUser implements User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RedditUser that = (RedditUser) o;
-        return Objects.equals(login, that.login);
+        User user = (User) o;
+        return Objects.equals(login, user.login);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class RedditUser implements User {
 
     @Override
     public String toString() {
-        return "RedditUser{" +
+        return "User{" +
                 "login='" + login + '\'' +
                 '}';
     }
