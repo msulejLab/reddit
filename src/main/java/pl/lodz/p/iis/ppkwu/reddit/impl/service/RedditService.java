@@ -3,9 +3,18 @@ package pl.lodz.p.iis.ppkwu.reddit.impl.service;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 // TODO implement :-)
 public class RedditService implements Reddit {
+
+    private Executor executor;
+
+
+    // Tworzony przy pomocy buildera
+    RedditService(Executor executor) {
+        this.executor = executor;
+    }
 
     @Override
     public void loadCategoriesList(Callback<List<Category>> callback) throws NullPointerException {
