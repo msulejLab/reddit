@@ -6,19 +6,17 @@ import java.util.Optional;
 
 public class Result<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
 
-    private boolean succeeded;
     private ResultStatus resultStatus;
     private R content;
 
-    public Result(boolean succeeded, ResultStatus resultStatus, R content) {
-        this.succeeded = succeeded;
+    public Result(ResultStatus resultStatus, R content) {
         this.resultStatus = resultStatus;
         this.content = content;
     }
 
     @Override
     public boolean succeeded() {
-        return succeeded;
+        return resultStatus.equals(ResultStatus.SUCCEEDED);
     }
 
     @Override
