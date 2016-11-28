@@ -1,4 +1,4 @@
-package pl.ppkwu.reddit;
+package pl.lodz.p.iis.ppkwu.reddit;
 
 public class Application {
 

@@ -1,4 +1,4 @@
-package pl.ppkwu.reddit.api;
+package pl.lodz.p.iis.ppkwu.reddit.api;
 
 /**
  * Możliwe statusy zakończonej operacji

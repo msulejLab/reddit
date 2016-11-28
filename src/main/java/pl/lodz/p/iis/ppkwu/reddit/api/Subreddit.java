@@ -1,4 +1,4 @@
-package pl.ppkwu.reddit.api;
+package pl.lodz.p.iis.ppkwu.reddit.api;
 
 /**
  * Subreddit
@@ -10,9 +10,5 @@ public interface Subreddit {
 	 */
 	public String title();
 
-	/**
-	 * @return Opis Subreddita.
-	 */
-	public String description();
 
 }
