@@ -1,4 +1,4 @@
-package pl.ppkwu.reddit.api;
+package pl.lodz.p.iis.ppkwu.reddit.api;
 
 import java.util.List;
 
@@ -15,25 +15,6 @@ public interface Reddit {
 	 * @see Callback
 	 */
 	public void loadCategoriesList(Callback<List<Category>> callback) throws NullPointerException;
-
-	/**
-	 * Rozpoczyna oprację pobierania pierwszej strony listy Subredditów.
-	 * @param callback Callback uruchamiany po zakończeniu operacji pobierania pierwszej strony listy Subredditów.
-	 * @throws NullPointerException Jeśli callback jest nullem. Nie rozpoczyna operacji.
-	 * @see Subreddit
-	 * @see Callback
-	 */
-	public void loadSubreddits(Callback<Page<Subreddit>> callback) throws NullPointerException;
-
-	/**
-	 * Rozpoczyna oprację pobierania pierwszej strony listy Subredditów wyszukanych na podstawie podanych słów kluczowych.
-	 * @param keywords Lista słów kluczowych.
-	 * @param callback Callback uruchamiany po zakończeniu operacji pobierania pierwszej strony listy Subredditów.
-	 * @throws NullPointerException Jeśli keywords lub callback jest nullem. Nie rozpoczyna operacji.
-	 * @see Subreddit
-	 * @see Callback
-	 */
-	public void loadSubredditsByKeywords(List<String> keywords, Callback<Page<Subreddit>> callback) throws NullPointerException;
 
 	/**
 	 * Rozpoczyna operację pobierania pierwszej strony wpisów z danego subreddita pod daną kategorią.
@@ -73,5 +54,13 @@ public interface Reddit {
 	 * @return Obiekt implementujący User o danym loginie.
 	 */
 	public User userWithLogin(String login);
+	
+	/**
+	 * Tworzy obiekt reprezentujący subreddit o danej nazwie.
+	 * Nie sprawdza czy istnieje subreddit na Reddicie o takim tytule
+	 * @param name - nazwa subreddita
+	 * @return Obiekt reprezentujący subreddit
+	 */
+	public Subreddit subredditWithName(String name);
 
 }
