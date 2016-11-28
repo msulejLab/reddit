@@ -1,4 +1,4 @@
-package pl.lodz.p.iis.ppkwu.reddit.model;
+package pl.lodz.p.iis.ppkwu.reddit.impl.model;
 
 import java.net.URL;
 import java.util.Optional;
