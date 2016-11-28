@@ -1,15 +1,9 @@
-package pl.ppkwu.reddit.model;
-
-import pl.ppkwu.reddit.api.*;
-import pl.ppkwu.reddit.api.User;
+package pl.lodz.p.iis.ppkwu.reddit.model;
 
 import java.net.URL;
 import java.util.Optional;
 
-/**
- * Created by 187796 on 11/22/2016.
- */
-public class News implements pl.ppkwu.reddit.api.News {
+public class News implements pl.lodz.p.iis.ppkwu.reddit.api.News {
     private String title;
     private User author;
     private URL thumbnailUrl;

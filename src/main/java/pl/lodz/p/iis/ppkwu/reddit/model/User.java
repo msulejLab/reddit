@@ -1,9 +1,9 @@
-package pl.ppkwu.reddit.model;
+package pl.lodz.p.iis.ppkwu.reddit.model;
 
 
 import java.util.Objects;
 
-public class User implements pl.ppkwu.reddit.api.User {
+public class User implements pl.lodz.p.iis.ppkwu.reddit.api.User {
 
     private String login;
 

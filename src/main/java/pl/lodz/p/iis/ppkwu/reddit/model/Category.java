@@ -1,11 +1,8 @@
-package pl.ppkwu.reddit.model;
+package pl.lodz.p.iis.ppkwu.reddit.model;
 
 import java.util.Objects;
 
-/**
- * Created by 187796 on 11/22/2016.
- */
-public class Category implements pl.ppkwu.reddit.api.Category {
+public class Category implements pl.lodz.p.iis.ppkwu.reddit.api.Category {
 
     private String name;
 

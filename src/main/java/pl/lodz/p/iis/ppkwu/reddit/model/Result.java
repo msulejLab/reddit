@@ -1,10 +1,10 @@
-package pl.ppkwu.reddit.model;
+package pl.lodz.p.iis.ppkwu.reddit.model;
 
-import pl.ppkwu.reddit.api.ResultStatus;
+import pl.lodz.p.iis.ppkwu.reddit.api.ResultStatus;
 
 import java.util.Optional;
 
-public class Result<R> implements pl.ppkwu.reddit.api.Result<R> {
+public class Result<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
 
     private boolean succeeded;
     private ResultStatus resultStatus;
