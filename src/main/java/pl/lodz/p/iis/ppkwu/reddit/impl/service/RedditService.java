@@ -6,7 +6,15 @@ import net.dean.jraw.http.oauth.Credentials;
 import net.dean.jraw.http.oauth.OAuthData;
 import net.dean.jraw.http.oauth.OAuthException;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
+import pl.lodz.p.iis.ppkwu.reddit.api.Category;
+import pl.lodz.p.iis.ppkwu.reddit.api.News;
+import pl.lodz.p.iis.ppkwu.reddit.api.Page;
+import pl.lodz.p.iis.ppkwu.reddit.api.Subreddit;
+import pl.lodz.p.iis.ppkwu.reddit.api.User;
+import pl.lodz.p.iis.ppkwu.reddit.impl.model.*;
+import pl.lodz.p.iis.ppkwu.reddit.impl.model.Result;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -35,7 +43,16 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadCategoriesList(Callback<List<Category>> callback) throws NullPointerException {
-
+        List<Category> list = new LinkedList<Category>();
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("gorace"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("najnowsze"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("wschodzace"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("kontrowersyjne"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("najwiecej punktow"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("pozlocone"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("wiki"));
+        list.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("promowane"));
+        callback.finished(new Result<>(ResultStatus.SUCCEEDED, list));
     }
 
     @Override
