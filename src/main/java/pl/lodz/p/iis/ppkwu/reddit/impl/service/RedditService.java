@@ -6,6 +6,12 @@ import net.dean.jraw.http.oauth.Credentials;
 import net.dean.jraw.http.oauth.OAuthData;
 import net.dean.jraw.http.oauth.OAuthException;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
+import pl.lodz.p.iis.ppkwu.reddit.api.Category;
+import pl.lodz.p.iis.ppkwu.reddit.api.News;
+import pl.lodz.p.iis.ppkwu.reddit.api.Page;
+import pl.lodz.p.iis.ppkwu.reddit.api.Subreddit;
+import pl.lodz.p.iis.ppkwu.reddit.api.User;
+import pl.lodz.p.iis.ppkwu.reddit.impl.model.*;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -28,6 +34,7 @@ public class RedditService implements Reddit {
         OAuthData authData = null;
         try {
             authData = redditClient.getOAuthHelper().easyAuth(credentials);
+            redditClient.authenticate(authData);
         } catch (OAuthException e) {
             throw new IllegalArgumentException("Initialization exception", e);
         }
@@ -60,6 +67,7 @@ public class RedditService implements Reddit {
 
     @Override
     public Subreddit subredditWithName(String name) {
-        return null;
+        String title = redditClient.getSubreddit(name).getTitle();
+        return new pl.lodz.p.iis.ppkwu.reddit.impl.model.Subreddit(title);
     }
 }
