@@ -65,15 +65,20 @@ public class RedditService implements Reddit {
         page.setLimit(10);
         page.setSorting(resolveSortingType(category));
         Listing<Submission> submissions = page.next();
-        List<News> news = new LinkedList<>();
-        for (Submission s : submissions) {
+
+        List<News> subredditNews = new LinkedList<>();
+        for (Submission submission : submissions) {
+            URL url;
             try {
-                news.add(new NewsImpl(s.getTitle(), new UserImpl(s.getAuthor()), new URL(s.getThumbnail())));
-            } catch (MalformedURLException ignored) {
-                news.add(new NewsImpl(s.getTitle(), new UserImpl(s.getAuthor()), null));
+                url = new URL(submission.getThumbnail());
+            } catch (MalformedURLException e) {
+                url = null;
             }
+            NewsImpl news1 = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
+            subredditNews.add(news1);
         }
-        callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(news)));
+
+        callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(subredditNews)));
     }
 
     @Override
