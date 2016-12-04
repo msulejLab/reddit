@@ -18,8 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import static java.lang.System.out;
-
 // TODO implement :-)
 public class RedditService implements Reddit {
 
@@ -88,7 +86,7 @@ public class RedditService implements Reddit {
     @Override
     public User userWithLogin(String login) {
         if(redditClient.getUser(login) != null){
-            return new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(login);
+            return new UserImpl(login);
         }
         return null;
     }
@@ -96,7 +94,7 @@ public class RedditService implements Reddit {
     @Override
     public Subreddit subredditWithName(String name) {
         String title = redditClient.getSubreddit(name).getTitle();
-        return new pl.lodz.p.iis.ppkwu.reddit.impl.model.Subreddit(title);
+        return new SubredditImpl(title);
     }
 
     private Sorting resolveSortingType(Category category) {
