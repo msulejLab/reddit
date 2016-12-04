@@ -5,9 +5,15 @@ import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
 import net.dean.jraw.http.oauth.OAuthData;
 import net.dean.jraw.http.oauth.OAuthException;
+import net.dean.jraw.models.Listing;
+import net.dean.jraw.models.Submission;
+import net.dean.jraw.paginators.Sorting;
+import net.dean.jraw.paginators.SubredditPaginator;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
 import pl.lodz.p.iis.ppkwu.reddit.impl.model.Result;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -15,7 +21,7 @@ import java.util.concurrent.Executor;
 // TODO implement :-)
 public class RedditService implements Reddit {
 
-    private static final List<Category> categories = new LinkedList<Category>(){{
+    private static final List<Category> categories = new LinkedList<Category>() {{
         add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("gorace"));
         add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("najnowsze"));
         add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("wschodzace"));
@@ -39,6 +45,7 @@ public class RedditService implements Reddit {
         OAuthData authData = null;
         try {
             authData = redditClient.getOAuthHelper().easyAuth(credentials);
+            redditClient.authenticate(authData);
         } catch (OAuthException e) {
             throw new IllegalArgumentException("Initialization exception", e);
         }
@@ -51,12 +58,23 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadSubredditNews(Subreddit subreddit, Category category, Callback<Page<News>> callback) throws NullPointerException {
-
+        SubredditPaginator page = new SubredditPaginator(redditClient);
+        page.setSubreddit(subreddit.title());
+        page.setLimit(10);
+        page.setSorting(resolveSortingType(category));
+        Listing<Submission> submissions = page.next();
+        List<News> news = new LinkedList<>();
+        for (Submission s : submissions) {
+            try {
+                news.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.News(s.getTitle(), new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(s.getAuthor()), new URL(s.getThumbnail())));
+            } catch (MalformedURLException ignored) {
+            }
+        }
+        callback.finished(new Result<>(ResultStatus.SUCCEEDED, new pl.lodz.p.iis.ppkwu.reddit.impl.model.Page<>(news)));
     }
 
     @Override
     public void loadUserNews(User user, Callback<Page<News>> callback) throws NullPointerException {
-
     }
 
     @Override
@@ -72,5 +90,23 @@ public class RedditService implements Reddit {
     @Override
     public Subreddit subredditWithName(String name) {
         return null;
+    }
+
+    private Sorting resolveSortingType(Category category) {
+        switch (category.name()) {
+            case "gorace":
+                return Sorting.HOT;
+            case "najnowsze":
+                return Sorting.NEW;
+            case "wschodzace":
+                return Sorting.RISING;
+            case "kontrowersyjne":
+                return Sorting.CONTROVERSIAL;
+            case "najwiecej punktow":
+                return Sorting.TOP;
+            case "pozlocone":
+                return Sorting.GILDED;
+        }
+        return Sorting.HOT;
     }
 }
