@@ -5,10 +5,12 @@ import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
 import net.dean.jraw.http.oauth.OAuthData;
 import net.dean.jraw.http.oauth.OAuthException;
+import net.dean.jraw.models.Contribution;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.paginators.Sorting;
 import net.dean.jraw.paginators.SubredditPaginator;
+import net.dean.jraw.paginators.UserContributionPaginator;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
 import pl.lodz.p.iis.ppkwu.reddit.impl.model.*;
 
@@ -45,6 +47,7 @@ public class RedditService implements Reddit {
         OAuthData authData = null;
         try {
             authData = redditClient.getOAuthHelper().easyAuth(credentials);
+            redditClient.authenticate(authData);
         } catch (OAuthException e) {
             throw new IllegalArgumentException("Initialization exception", e);
         }
@@ -75,7 +78,22 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadUserNews(User user, Callback<Page<News>> callback) throws NullPointerException {
+        UserContributionPaginator page = new UserContributionPaginator(redditClient, "submitted", user.login());
+        Listing<Contribution> contributions = page.next();
 
+        List<News> userNews = new LinkedList<>();
+        for(Contribution contribution: contributions){
+            URL url;
+            try {
+                url = new URL(contribution.data("url"));
+            } catch (MalformedURLException e) {
+                url = null;
+            }
+            News news = new NewsImpl(contribution.data("title"), new UserImpl(contribution.data("author")), url);
+            userNews.add(news);
+        }
+
+        callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(userNews)));
     }
 
     @Override
