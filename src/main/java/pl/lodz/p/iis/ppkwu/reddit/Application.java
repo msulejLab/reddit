@@ -24,5 +24,7 @@ public class Application {
 
         RedditBuilder redditBuilder = Util.redditBuilder();
         Reddit reddit = redditBuilder.build();
+        System.out.println(reddit.subredditWithName("java").title());
+        System.out.println(reddit.userWithLogin("ppkwu-reddit").login());
     }
 }

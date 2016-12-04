@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import static java.lang.System.out;
+
 // TODO implement :-)
 public class RedditService implements Reddit {
 
@@ -45,7 +47,6 @@ public class RedditService implements Reddit {
         OAuthData authData = null;
         try {
             authData = redditClient.getOAuthHelper().easyAuth(credentials);
-            redditClient.authenticate(authData);
         } catch (OAuthException e) {
             throw new IllegalArgumentException("Initialization exception", e);
         }
@@ -76,6 +77,7 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadUserNews(User user, Callback<Page<News>> callback) throws NullPointerException {
+
     }
 
     @Override
@@ -85,12 +87,16 @@ public class RedditService implements Reddit {
 
     @Override
     public User userWithLogin(String login) {
+        if(redditClient.getUser(login) != null){
+            return new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(login);
+        }
         return null;
     }
 
     @Override
     public Subreddit subredditWithName(String name) {
-        return null;
+        String title = redditClient.getSubreddit(name).getTitle();
+        return new pl.lodz.p.iis.ppkwu.reddit.impl.model.Subreddit(title);
     }
 
     private Sorting resolveSortingType(Category category) {
