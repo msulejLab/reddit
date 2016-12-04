@@ -68,6 +68,7 @@ public class RedditService implements Reddit {
             try {
                 news.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.News(s.getTitle(), new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(s.getAuthor()), new URL(s.getThumbnail())));
             } catch (MalformedURLException ignored) {
+                news.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.News(s.getTitle(), new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(s.getAuthor()), null));
             }
         }
         callback.finished(new Result<>(ResultStatus.SUCCEEDED, new pl.lodz.p.iis.ppkwu.reddit.impl.model.Page<>(news)));
