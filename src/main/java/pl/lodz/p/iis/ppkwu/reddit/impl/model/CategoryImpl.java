@@ -1,8 +1,10 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.model;
 
+import pl.lodz.p.iis.ppkwu.reddit.api.Category;
+
 import java.util.Objects;
 
-public class Category implements pl.lodz.p.iis.ppkwu.reddit.api.Category {
+public class CategoryImpl implements Category {
 
     private String name;
 
@@ -11,7 +13,7 @@ public class Category implements pl.lodz.p.iis.ppkwu.reddit.api.Category {
         return name;
     }
 
-    public Category(String name) {
+    public CategoryImpl(String name) {
         this.name = name;
     }
 
@@ -19,12 +21,19 @@ public class Category implements pl.lodz.p.iis.ppkwu.reddit.api.Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(name, category.name);
+        CategoryImpl categoryImpl = (CategoryImpl) o;
+        return Objects.equals(name, categoryImpl.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryImpl{" +
+            "name='" + name + '\'' +
+            '}';
     }
 }

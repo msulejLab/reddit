@@ -10,7 +10,7 @@ import net.dean.jraw.models.Submission;
 import net.dean.jraw.paginators.Sorting;
 import net.dean.jraw.paginators.SubredditPaginator;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
-import pl.lodz.p.iis.ppkwu.reddit.impl.model.Result;
+import pl.lodz.p.iis.ppkwu.reddit.impl.model.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,14 +22,14 @@ import java.util.concurrent.Executor;
 public class RedditService implements Reddit {
 
     private static final List<Category> categories = new LinkedList<Category>() {{
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("gorace"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("najnowsze"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("wschodzace"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("kontrowersyjne"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("najwiecej punktow"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("pozlocone"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("wiki"));
-        add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.Category("promowane"));
+        add(new CategoryImpl("gorace"));
+        add(new CategoryImpl("najnowsze"));
+        add(new CategoryImpl("wschodzace"));
+        add(new CategoryImpl("kontrowersyjne"));
+        add(new CategoryImpl("najwiecej punktow"));
+        add(new CategoryImpl("pozlocone"));
+        add(new CategoryImpl("wiki"));
+        add(new CategoryImpl("promowane"));
     }};
 
     private Executor executor;
@@ -53,7 +53,7 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadCategoriesList(Callback<List<Category>> callback) throws NullPointerException {
-        callback.finished(new Result<>(ResultStatus.SUCCEEDED, categories));
+        callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, categories));
     }
 
     @Override
@@ -66,12 +66,12 @@ public class RedditService implements Reddit {
         List<News> news = new LinkedList<>();
         for (Submission s : submissions) {
             try {
-                news.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.News(s.getTitle(), new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(s.getAuthor()), new URL(s.getThumbnail())));
+                news.add(new NewsImpl(s.getTitle(), new UserImpl(s.getAuthor()), new URL(s.getThumbnail())));
             } catch (MalformedURLException ignored) {
-                news.add(new pl.lodz.p.iis.ppkwu.reddit.impl.model.News(s.getTitle(), new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(s.getAuthor()), null));
+                news.add(new NewsImpl(s.getTitle(), new UserImpl(s.getAuthor()), null));
             }
         }
-        callback.finished(new Result<>(ResultStatus.SUCCEEDED, new pl.lodz.p.iis.ppkwu.reddit.impl.model.Page<>(news)));
+        callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(news)));
     }
 
     @Override

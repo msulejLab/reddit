@@ -1,13 +1,15 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.model;
 
+import pl.lodz.p.iis.ppkwu.reddit.api.Page;
+
 import java.util.List;
 import java.util.Objects;
 
-public class Page<C> implements pl.lodz.p.iis.ppkwu.reddit.api.Page<C> {
+public class PageImpl<C> implements Page<C> {
 
     private final List<C> content;
 
-    public Page(List<C> content) {
+    public PageImpl(List<C> content) {
         this.content = content;
     }
 
@@ -20,7 +22,7 @@ public class Page<C> implements pl.lodz.p.iis.ppkwu.reddit.api.Page<C> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Page<?> page = (Page<?>) o;
+        PageImpl<?> page = (PageImpl<?>) o;
         return Objects.equals(content, page.content);
     }
 

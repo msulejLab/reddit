@@ -1,12 +1,14 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.model;
 
+import pl.lodz.p.iis.ppkwu.reddit.api.Subreddit;
+
 import java.util.Objects;
 
-public class Subreddit implements pl.lodz.p.iis.ppkwu.reddit.api.Subreddit {
+public class SubredditImpl implements Subreddit {
 
     private String title;
 
-    public Subreddit(String title) {
+    public SubredditImpl(String title) {
         this.title = title;
     }
 
@@ -19,7 +21,7 @@ public class Subreddit implements pl.lodz.p.iis.ppkwu.reddit.api.Subreddit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subreddit subreddit = (Subreddit) o;
+        SubredditImpl subreddit = (SubredditImpl) o;
         return Objects.equals(title, subreddit.title);
     }
 
@@ -28,5 +30,10 @@ public class Subreddit implements pl.lodz.p.iis.ppkwu.reddit.api.Subreddit {
         return Objects.hash(title);
     }
 
-
+    @Override
+    public String toString() {
+        return "SubredditImpl{" +
+            "title='" + title + '\'' +
+            '}';
+    }
 }

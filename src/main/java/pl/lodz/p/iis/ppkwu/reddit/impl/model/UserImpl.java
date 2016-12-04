@@ -1,13 +1,15 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.model;
 
 
+import pl.lodz.p.iis.ppkwu.reddit.api.User;
+
 import java.util.Objects;
 
-public class User implements pl.lodz.p.iis.ppkwu.reddit.api.User {
+public class UserImpl implements User {
 
     private String login;
 
-    public User(String login) {
+    public UserImpl(String login) {
         this.login = login;
     }
 
@@ -19,7 +21,7 @@ public class User implements pl.lodz.p.iis.ppkwu.reddit.api.User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserImpl user = (UserImpl) o;
         return Objects.equals(login, user.login);
     }
 
@@ -30,8 +32,8 @@ public class User implements pl.lodz.p.iis.ppkwu.reddit.api.User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                '}';
+        return "UserImpl{" +
+            "login='" + login + '\'' +
+            '}';
     }
 }

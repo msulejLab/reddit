@@ -5,12 +5,12 @@ import pl.lodz.p.iis.ppkwu.reddit.api.ResultStatus;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Result<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
+public class ResultImpl<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
 
     private ResultStatus resultStatus;
     private R content;
 
-    public Result(ResultStatus resultStatus, R content) {
+    public ResultImpl(ResultStatus resultStatus, R content) {
         this.resultStatus = resultStatus;
         this.content = content;
     }
@@ -34,7 +34,7 @@ public class Result<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Result<?> result = (Result<?>) o;
+        ResultImpl<?> result = (ResultImpl<?>) o;
         return resultStatus == result.resultStatus &&
             Objects.equals(content, result.content);
     }
@@ -46,7 +46,7 @@ public class Result<R> implements pl.lodz.p.iis.ppkwu.reddit.api.Result<R> {
 
     @Override
     public String toString() {
-        return "Result{" +
+        return "ResultImpl{" +
             "resultStatus=" + resultStatus +
             ", content=" + content +
             '}';
