@@ -62,6 +62,9 @@ public class RedditService implements Reddit {
 
     @Override
     public User userWithLogin(String login) {
+        if(redditClient.getUser(login) != null){
+            return new pl.lodz.p.iis.ppkwu.reddit.impl.model.User(login);
+        }
         return null;
     }
 
