@@ -71,8 +71,8 @@ public class RedditService implements Reddit {
             List<News> subredditNews = new LinkedList<>();
             for (Submission submission : submissions) {
                 URL url = createURL(submission.getThumbnail());
-                NewsImpl news1 = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
-                subredditNews.add(news1);
+                NewsImpl news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
+                subredditNews.add(news);
             }
 
             callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(subredditNews)));
