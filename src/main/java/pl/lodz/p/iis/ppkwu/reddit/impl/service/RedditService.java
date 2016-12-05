@@ -1,5 +1,6 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.service;
 
+import com.sun.deploy.util.StringUtils;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
@@ -8,9 +9,7 @@ import net.dean.jraw.http.oauth.OAuthException;
 import net.dean.jraw.models.Contribution;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
-import net.dean.jraw.paginators.Sorting;
-import net.dean.jraw.paginators.SubredditPaginator;
-import net.dean.jraw.paginators.UserContributionPaginator;
+import net.dean.jraw.paginators.*;
 import pl.lodz.p.iis.ppkwu.reddit.api.*;
 import pl.lodz.p.iis.ppkwu.reddit.impl.model.*;
 
@@ -109,7 +108,24 @@ public class RedditService implements Reddit {
 
     @Override
     public void loadNewsByKeywords(List<String> keywords, Callback<Page<News>> callback) throws NullPointerException {
+        executor.execute(() -> {
+            String query = StringUtils.join(keywords, "+");
+            SubmissionSearchPaginator page = new SubmissionSearchPaginator(redditClient, query);
+            Listing<Submission> submissions = page.next();
 
+            List<News> searchedNews = new LinkedList<>();
+            for (Submission submission : submissions) {
+                URL url;
+                try {
+                    url = new URL(submission.getUrl());
+                } catch (MalformedURLException e) {
+                    url = null;
+                }
+                News news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
+                searchedNews.add(news);
+            }
+            callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<News>(searchedNews)));
+        });
     }
 
     @Override
