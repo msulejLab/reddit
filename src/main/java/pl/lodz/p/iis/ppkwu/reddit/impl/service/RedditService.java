@@ -87,7 +87,7 @@ public class RedditService implements Reddit {
 
             List<News> userNews = new LinkedList<>();
             for(Contribution contribution: contributions){
-                URL url = createURL(contribution.data("url"));
+                URL url = createURL(contribution.data("getThumbnail"));
                 News news = new NewsImpl(contribution.data("title"), new UserImpl(contribution.data("author")), url);
                 userNews.add(news);
             }
@@ -105,7 +105,7 @@ public class RedditService implements Reddit {
 
             List<News> searchedNews = new LinkedList<>();
             for (Submission submission : submissions) {
-                URL url = createURL(submission.getUrl());
+                URL url = createURL(submission.getThumbnail());
                 News news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
                 searchedNews.add(news);
             }
