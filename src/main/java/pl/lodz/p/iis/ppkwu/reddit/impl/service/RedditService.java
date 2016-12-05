@@ -70,12 +70,7 @@ public class RedditService implements Reddit {
 
             List<News> subredditNews = new LinkedList<>();
             for (Submission submission : submissions) {
-                URL url;
-                try {
-                    url = new URL(submission.getThumbnail());
-                } catch (MalformedURLException e) {
-                    url = null;
-                }
+                URL url = createURL(submission.getThumbnail());
                 NewsImpl news1 = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
                 subredditNews.add(news1);
             }
@@ -92,12 +87,7 @@ public class RedditService implements Reddit {
 
             List<News> userNews = new LinkedList<>();
             for(Contribution contribution: contributions){
-                URL url;
-                try {
-                    url = new URL(contribution.data("url"));
-                } catch (MalformedURLException e) {
-                    url = null;
-                }
+                URL url = createURL(contribution.data("url"));
                 News news = new NewsImpl(contribution.data("title"), new UserImpl(contribution.data("author")), url);
                 userNews.add(news);
             }
@@ -115,12 +105,7 @@ public class RedditService implements Reddit {
 
             List<News> searchedNews = new LinkedList<>();
             for (Submission submission : submissions) {
-                URL url;
-                try {
-                    url = new URL(submission.getUrl());
-                } catch (MalformedURLException e) {
-                    url = null;
-                }
+                URL url = createURL(submission.getUrl());
                 News news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
                 searchedNews.add(news);
             }
@@ -136,6 +121,16 @@ public class RedditService implements Reddit {
     @Override
     public Subreddit subredditWithName(String name) {
         return new SubredditImpl(name);
+    }
+
+    private URL createURL(String urlString){
+        URL url;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            url = null;
+        }
+        return url;
     }
 
     private Sorting resolveSortingType(Category category) {
