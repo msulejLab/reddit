@@ -1,6 +1,5 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.service;
 
-import com.sun.deploy.util.StringUtils;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
@@ -87,7 +86,7 @@ public class RedditService implements Reddit {
 
             List<News> userNews = new LinkedList<>();
             for(Contribution contribution: contributions){
-                URL url = createURL(contribution.data("url"));
+                URL url = createURL(contribution.data("thumbnail"));
                 News news = new NewsImpl(contribution.data("title"), new UserImpl(contribution.data("author")), url);
                 userNews.add(news);
             }
@@ -99,13 +98,13 @@ public class RedditService implements Reddit {
     @Override
     public void loadNewsByKeywords(List<String> keywords, Callback<Page<News>> callback) throws NullPointerException {
         executor.execute(() -> {
-            String query = StringUtils.join(keywords, "+");
+            String query = String.join("+", keywords);
             SubmissionSearchPaginator page = new SubmissionSearchPaginator(redditClient, query);
             Listing<Submission> submissions = page.next();
 
             List<News> searchedNews = new LinkedList<>();
             for (Submission submission : submissions) {
-                URL url = createURL(submission.getUrl());
+                URL url = createURL(submission.getThumbnail());
                 News news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
                 searchedNews.add(news);
             }
