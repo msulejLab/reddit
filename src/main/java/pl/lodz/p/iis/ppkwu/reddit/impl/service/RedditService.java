@@ -29,7 +29,6 @@ public class RedditService implements Reddit {
         add(new CategoryImpl("kontrowersyjne"));
         add(new CategoryImpl("najwiecej punktow"));
         add(new CategoryImpl("pozlocone"));
-        add(new CategoryImpl("wiki"));
         add(new CategoryImpl("promowane"));
     }};
 
