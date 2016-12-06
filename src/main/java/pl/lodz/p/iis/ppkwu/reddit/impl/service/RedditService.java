@@ -64,15 +64,19 @@ public class RedditService implements Reddit {
         executor.execute(() -> {
             SubredditPaginator page = new SubredditPaginator(redditClient);
             page.setSubreddit(subreddit.title());
-            page.setLimit(10);
             page.setSorting(resolveSortingType(category));
             Listing<Submission> submissions = page.next();
 
             List<News> subredditNews = new LinkedList<>();
             for (Submission submission : submissions) {
-                URL url = createURL(submission.getThumbnail());
-                NewsImpl news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
+                URL url = createURL(submission.data("thumbnail"));
+                String title = submission.getTitle();
+                if(title==null){
+                    title = submission.data("link_title");
+                }
+                NewsImpl news = new NewsImpl(title, new UserImpl(submission.getAuthor()), url);
                 subredditNews.add(news);
+
             }
 
             callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(subredditNews)));
