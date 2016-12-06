@@ -110,7 +110,7 @@ public class RedditService implements Reddit {
                 News news = new NewsImpl(submission.getTitle(), new UserImpl(submission.getAuthor()), url);
                 searchedNews.add(news);
             }
-            callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<News>(searchedNews)));
+            callback.finished(new ResultImpl<>(ResultStatus.SUCCEEDED, new PageImpl<>(searchedNews)));
         });
     }
 
