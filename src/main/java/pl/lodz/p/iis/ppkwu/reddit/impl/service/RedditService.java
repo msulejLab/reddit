@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-// TODO implement :-)
 public class RedditService implements Reddit {
 
     private static final List<Category> categories = new LinkedList<Category>() {{
@@ -32,7 +31,7 @@ public class RedditService implements Reddit {
         add(new CategoryImpl("promowane"));
     }};
 
-    private Executor executor;
+    private final Executor executor;
     private final RedditClient redditClient;
 
     RedditService(Executor executor) {
