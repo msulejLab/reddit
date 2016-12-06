@@ -1,6 +1,5 @@
 package pl.lodz.p.iis.ppkwu.reddit.impl.service;
 
-import com.sun.deploy.util.StringUtils;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
@@ -30,7 +29,7 @@ public class RedditService implements Reddit {
         add(new CategoryImpl("pozlocone"));
     }};
 
-    private Executor executor;
+    private final Executor executor;
     private final RedditClient redditClient;
 
     RedditService(Executor executor) {
@@ -100,7 +99,7 @@ public class RedditService implements Reddit {
     @Override
     public void loadNewsByKeywords(List<String> keywords, Callback<Page<News>> callback) throws NullPointerException {
         executor.execute(() -> {
-            String query = StringUtils.join(keywords, "+");
+            String query = String.join("+", keywords);
             SubmissionSearchPaginator page = new SubmissionSearchPaginator(redditClient, query);
             Listing<Submission> submissions = page.next();
 
